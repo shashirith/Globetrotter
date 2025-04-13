@@ -44,7 +44,7 @@ export default function Home() {
       const response = await fetch("/api/destinations");
       const data = await response.json();
       console.log(data, "data");
-      setDestination(data.destination);
+      setDestination(data.destinations[0]);
       setOptions(data.options);
       setSelectedAnswer(null);
       setShowFunFact(false);
@@ -59,6 +59,7 @@ export default function Home() {
   useEffect(() => {
     fetchNewQuestion();
   }, []);
+  console.log(destination, "destination");
 
   const handleAnswer = (answer: string) => {
     setSelectedAnswer(answer);
