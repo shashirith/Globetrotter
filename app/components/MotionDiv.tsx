@@ -17,7 +17,12 @@ export default function MotionDiv({
   onClick,
 }: MotionDivProps) {
   return (
-    <motion.div initial={initial} animate={animate} className={className}>
+    <motion.div
+      initial={initial}
+      animate={animate}
+      className={className}
+      onClick={onClick}
+    >
       {children}
     </motion.div>
   );
