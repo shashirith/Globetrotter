@@ -1359,4 +1359,514 @@ export const destinations = [
       "The city's famous soccer team, FC Barcelona, is owned by its fans.",
     ],
   },
+  {
+    id: 11,
+    name: "Beijing",
+    country: "China",
+    clues: [
+      "This city hosted the 2008 Summer Olympics.",
+      "Home to a famous square and a historic palace complex.",
+    ],
+    funFacts: [
+      "Beijing's Forbidden City is the largest ancient palatial structure in the world.",
+      "The city has more than 3,000 years of history.",
+    ],
+    trivia: [
+      "Beijing is known for its Peking duck, a famous Chinese dish.",
+      "The city's name means 'Northern Capital' in Chinese.",
+    ],
+  },
+  {
+    id: 12,
+    name: "Bangkok",
+    country: "Thailand",
+    clues: [
+      "This city is known for its vibrant street life and cultural landmarks.",
+      "Home to a famous reclining Buddha statue.",
+    ],
+    funFacts: [
+      "Bangkok's full ceremonial name is the longest city name in the world.",
+      "The city has more than 400 temples.",
+    ],
+    trivia: [
+      "Bangkok is known as the 'Venice of the East' due to its many canals.",
+      "The city's street food is world-renowned.",
+    ],
+  },
+  {
+    id: 13,
+    name: "Buenos Aires",
+    country: "Argentina",
+    clues: [
+      "This city is known for its European-style architecture and tango music.",
+      "Home to a famous pink government building.",
+    ],
+    funFacts: [
+      "Buenos Aires is the birthplace of tango.",
+      "The city has the widest avenue in the world, Avenida 9 de Julio.",
+    ],
+    trivia: [
+      "Buenos Aires means 'Good Airs' in Spanish.",
+      "The city's Teatro Colón is considered one of the best opera houses in the world.",
+    ],
+  },
+  {
+    id: 14,
+    name: "Cape Town",
+    country: "South Africa",
+    clues: [
+      "This city is known for its harbor and Table Mountain.",
+      "Home to a famous island prison where Nelson Mandela was held.",
+    ],
+    funFacts: [
+      "Cape Town is one of the most multicultural cities in the world.",
+      "The city is known for its stunning beaches and vineyards.",
+    ],
+    trivia: [
+      "Cape Town was the first European settlement in South Africa.",
+      "The city's Kirstenbosch Botanical Garden is a UNESCO World Heritage Site.",
+    ],
+  },
+  {
+    id: 15,
+    name: "Delhi",
+    country: "India",
+    clues: [
+      "This city is known for its historic sites and bustling markets.",
+      "Home to a famous minaret and a grand mosque.",
+    ],
+    funFacts: [
+      "Delhi has been continuously inhabited since the 6th century BC.",
+      "The city is home to three UNESCO World Heritage Sites.",
+    ],
+    trivia: [
+      "Delhi is the second most populous city in India.",
+      "The city's Red Fort is a symbol of India's independence.",
+    ],
+  },
+  {
+    id: 16,
+    name: "Havana",
+    country: "Cuba",
+    clues: [
+      "This city is known for its colorful colonial architecture and vintage cars.",
+      "Home to a famous seaside promenade.",
+    ],
+    funFacts: [
+      "Havana's Old Town is a UNESCO World Heritage Site.",
+      "The city is famous for its cigars and rum.",
+    ],
+    trivia: [
+      "Havana was founded by the Spanish in the 16th century.",
+      "The city's Malecón is a popular spot for locals and tourists alike.",
+    ],
+  },
+  {
+    id: 17,
+    name: "Hong Kong",
+    country: "China",
+    clues: [
+      "This city is known for its skyline and deep natural harbor.",
+      "Home to a famous peak offering panoramic views.",
+    ],
+    funFacts: [
+      "Hong Kong has more skyscrapers than any other city in the world.",
+      "The city is known for its vibrant food scene.",
+    ],
+    trivia: [
+      "Hong Kong was a British colony until 1997.",
+      "The city's name means 'Fragrant Harbor' in Chinese.",
+    ],
+  },
+  {
+    id: 18,
+    name: "Istanbul",
+    country: "Turkey",
+    clues: [
+      "This city spans two continents and was once the capital of two great empires.",
+      "Home to a famous mosque with six minarets and a grand bazaar.",
+    ],
+    funFacts: [
+      "Istanbul's Grand Bazaar is one of the world's oldest and largest covered markets.",
+      "The city has been the capital of three different empires: Roman, Byzantine, and Ottoman.",
+    ],
+    trivia: [
+      "Istanbul is the only city in the world located on two continents: Europe and Asia.",
+      "The city's Hagia Sophia has served as a church, mosque, and now a museum.",
+    ],
+  },
+  {
+    id: 19,
+    name: "Jakarta",
+    country: "Indonesia",
+    clues: [
+      "This city is known for its bustling streets and diverse culture.",
+      "Home to a famous national monument.",
+    ],
+    funFacts: [
+      "Jakarta is the largest city in Southeast Asia.",
+      "The city is a melting pot of cultures and languages.",
+    ],
+    trivia: [
+      "Jakarta was formerly known as Batavia during the Dutch colonial period.",
+      "The city's name means 'Complete Victory' in Sanskrit.",
+    ],
+  },
+  {
+    id: 20,
+    name: "Kuala Lumpur",
+    country: "Malaysia",
+    clues: [
+      "This city is known for its modern skyline and twin towers.",
+      "Home to a famous bird park and a historic railway station.",
+    ],
+    funFacts: [
+      "Kuala Lumpur is one of the fastest-growing metropolitan regions in Southeast Asia.",
+      "The city is known for its diverse cuisine and vibrant street markets.",
+    ],
+    trivia: [
+      "Kuala Lumpur means 'Muddy Confluence' in Malay.",
+      "The city's Petronas Towers were the tallest buildings in the world from 1998 to 2004.",
+    ],
+  },
+  {
+    id: 21,
+    name: "Lagos",
+    country: "Nigeria",
+    clues: [
+      "This city is known for its music scene and bustling markets.",
+      "Home to a famous beach and a national museum.",
+    ],
+    funFacts: [
+      "Lagos is the largest city in Africa by population.",
+      "The city is known for its vibrant nightlife and cultural festivals.",
+    ],
+    trivia: [
+      "Lagos was the capital of Nigeria until 1991.",
+      "The city's name means 'Lakes' in Portuguese.",
+    ],
+  },
+  {
+    id: 22,
+    name: "Lima",
+    country: "Peru",
+    clues: [
+      "This city is known for its colonial architecture and vibrant food scene.",
+      "Home to a famous fountain park and a historic cathedral.",
+    ],
+    funFacts: [
+      "Lima is the second-largest desert city in the world after Cairo.",
+      "The city is known for its ceviche, a popular seafood dish.",
+    ],
+    trivia: [
+      "Lima was founded by Spanish conquistador Francisco Pizarro in 1535.",
+      "The city's historic center is a UNESCO World Heritage Site.",
+    ],
+  },
+  {
+    id: 23,
+    name: "Manila",
+    country: "Philippines",
+    clues: [
+      "This city is known for its historic walled city and vibrant street life.",
+      "Home to a famous bay and a national museum.",
+    ],
+    funFacts: [
+      "Manila is one of the most densely populated cities in the world.",
+      "The city is known for its jeepneys, a popular mode of public transportation.",
+    ],
+    trivia: [
+      "Manila was founded by Spanish conquistadors in 1571.",
+      "The city's name comes from the phrase 'May Nilad', referring to a flowering plant.",
+    ],
+  },
+  {
+    id: 24,
+    name: "Mexico City",
+    country: "Mexico",
+    clues: [
+      "This city is known for its ancient ruins and vibrant culture.",
+      "Home to a famous square and a historic cathedral.",
+    ],
+    funFacts: [
+      "Mexico City is one of the largest cities in the world by population.",
+      "The city is built on the ruins of the ancient Aztec city of Tenochtitlán.",
+    ],
+    trivia: [
+      "Mexico City was originally called Tenochtitlán by the Aztecs.",
+      "The city's Zócalo is one of the largest city squares in the world.",
+    ],
+  },
+  {
+    id: 25,
+    name: "Moscow",
+    country: "Russia",
+    clues: [
+      "This city is home to a famous square with colorful onion-domed cathedrals.",
+      "Known for its metro system with ornate stations that look like palaces.",
+    ],
+    funFacts: [
+      "Moscow's metro system is one of the deepest in the world, with some stations 84 meters underground.",
+      "The city's Kremlin is the largest medieval fortress in the world.",
+    ],
+    trivia: [
+      "Moscow has more billionaires than any other city except New York.",
+      "The city's Red Square has nothing to do with communism - the name comes from an old Russian word meaning 'beautiful'.",
+    ],
+  },
+  {
+    id: 26,
+    name: "Mumbai",
+    country: "India",
+    clues: [
+      "This city is known for its Bollywood film industry and bustling streets.",
+      "Home to a famous gateway and a historic railway station.",
+    ],
+    funFacts: [
+      "Mumbai is the financial capital of India.",
+      "The city is home to three UNESCO World Heritage Sites.",
+    ],
+    trivia: [
+      "Mumbai was formerly known as Bombay.",
+      "The city's name is derived from the goddess Mumbadevi.",
+    ],
+  },
+  {
+    id: 27,
+    name: "Nairobi",
+    country: "Kenya",
+    clues: [
+      "This city is known for its national park and vibrant culture.",
+      "Home to a famous museum and a historic railway station.",
+    ],
+    funFacts: [
+      "Nairobi is the only city in the world with a national park within its borders.",
+      "The city is known for its wildlife and safari tours.",
+    ],
+    trivia: [
+      "Nairobi was founded in 1899 as a rail depot on the Uganda Railway.",
+      "The city's name comes from the Maasai phrase 'Enkare Nairobi', meaning 'cool water'.",
+    ],
+  },
+  {
+    id: 28,
+    name: "New Delhi",
+    country: "India",
+    clues: [
+      "This city is known for its historic sites and government buildings.",
+      "Home to a famous gate and a presidential residence.",
+    ],
+    funFacts: [
+      "New Delhi is the capital of India.",
+      "The city was designed by British architects Edwin Lutyens and Herbert Baker.",
+    ],
+    trivia: [
+      "New Delhi was inaugurated as the capital of India in 1931.",
+      "The city's India Gate is a war memorial dedicated to Indian soldiers.",
+    ],
+  },
+  {
+    id: 29,
+    name: "Paris",
+    country: "France",
+    clues: [
+      "This city is home to a famous tower that sparkles every night.",
+      "Known as the 'City of Love' and a hub for fashion and art.",
+    ],
+    funFacts: [
+      "The Eiffel Tower was supposed to be dismantled after 20 years but was saved because it was useful for radio transmissions!",
+      "Paris has only one stop sign in the entire city—most intersections rely on priority-to-the-right rules.",
+    ],
+    trivia: [
+      "This city is famous for its croissants and macarons. Bon appétit!",
+      "Paris was originally a Roman city called Lutetia.",
+    ],
+  },
+  {
+    id: 30,
+    name: "Rio de Janeiro",
+    country: "Brazil",
+    clues: [
+      "Home to a famous statue of Christ with outstretched arms.",
+      "Known for its annual carnival celebration and samba music.",
+    ],
+    funFacts: [
+      "Rio de Janeiro means 'River of January' in Portuguese.",
+      "The city's famous Copacabana Beach has a wave pattern sidewalk that's been copied worldwide.",
+    ],
+    trivia: [
+      "Rio was the capital of Brazil until 1960 when it was moved to Brasília.",
+      "The city's New Year's Eve celebration on Copacabana Beach attracts over 2 million people.",
+    ],
+  },
+  {
+    id: 101,
+    name: "Seoul",
+    country: "South Korea",
+    clues: [
+      "This city is known for its modern skyscrapers and historic palaces.",
+      "Home to a famous tower offering panoramic views.",
+    ],
+    funFacts: [
+      "Seoul is one of the most wired cities in the world.",
+      "The city is known for its K-pop music and entertainment industry.",
+    ],
+    trivia: [
+      "Seoul was the capital of Korea during the Joseon Dynasty.",
+      "The city's name means 'Capital' in Korean.",
+    ],
+  },
+  {
+    id: 102,
+    name: "Shanghai",
+    country: "China",
+    clues: [
+      "This city is known for its modern skyline and historic waterfront.",
+      "Home to a famous tower and a historic garden.",
+    ],
+    funFacts: [
+      "Shanghai is the largest city in China by population.",
+      "The city is known for its vibrant nightlife and shopping districts.",
+    ],
+    trivia: [
+      "Shanghai was a major trading port during the 19th century.",
+      "The city's name means 'Upon the Sea' in Chinese.",
+    ],
+  },
+  {
+    id: 103,
+    name: "Singapore",
+    country: "Singapore",
+    clues: [
+      "This city is known for its cleanliness and modern architecture.",
+      "Home to a famous marina and a historic district.",
+    ],
+    funFacts: [
+      "Singapore is one of the world's greenest cities.",
+      "The city is known for its diverse cuisine and hawker centers.",
+    ],
+    trivia: [
+      "Singapore was founded as a British trading colony in 1819.",
+      "The city's name means 'Lion City' in Malay.",
+    ],
+  },
+  {
+    id: 104,
+    name: "Sydney",
+    country: "Australia",
+    clues: [
+      "Home to a famous opera house with distinctive shell-like roofs.",
+      "This city has a famous bridge that locals call 'the coat hanger'.",
+    ],
+    funFacts: [
+      "Sydney Harbour Bridge is the world's largest steel arch bridge.",
+      "The city has over 100 beaches within its metropolitan area.",
+    ],
+    trivia: [
+      "Sydney was originally established as a British penal colony in 1788.",
+      "The city's New Year's Eve fireworks display is one of the first major celebrations in the world each year.",
+    ],
+  },
+  {
+    id: 105,
+    name: "Tokyo",
+    country: "Japan",
+    clues: [
+      "This city has the busiest pedestrian crossing in the world.",
+      "You can visit an entire district dedicated to anime, manga, and gaming.",
+    ],
+    funFacts: [
+      "Tokyo was originally a small fishing village called Edo before becoming the bustling capital it is today!",
+      "More than 14 million people live in Tokyo, making it one of the most populous cities in the world.",
+    ],
+    trivia: [
+      "The city has over 160,000 restaurants, more than any other city in the world.",
+      "Tokyo's subway system is so efficient that train delays of just a few minutes come with formal apologies.",
+    ],
+  },
+  {
+    id: 106,
+    name: "Toronto",
+    country: "Canada",
+    clues: [
+      "This city is known for its multicultural population and iconic tower.",
+      "Home to a famous island park and a historic market.",
+    ],
+    funFacts: [
+      "Toronto is the largest city in Canada by population.",
+      "The city is known for its diverse neighborhoods and cultural festivals.",
+    ],
+    trivia: [
+      "Toronto was originally called York when it was founded in 1793.",
+      "The city's name comes from a Mohawk word meaning 'place where trees stand in water'.",
+    ],
+  },
+  {
+    id: 107,
+    name: "Vancouver",
+    country: "Canada",
+    clues: [
+      "This city is known for its natural beauty and outdoor activities.",
+      "Home to a famous park and a historic district.",
+    ],
+    funFacts: [
+      "Vancouver is one of the most livable cities in the world.",
+      "The city is known for its film industry and has been nicknamed 'Hollywood North'.",
+    ],
+    trivia: [
+      "Vancouver was named after British explorer George Vancouver.",
+      "The city's Stanley Park is larger than New York's Central Park.",
+    ],
+  },
+  {
+    id: 108,
+    name: "Vienna",
+    country: "Austria",
+    clues: [
+      "This city is known as the 'City of Music' and was home to famous composers.",
+      "Home to a famous opera house and the world's oldest zoo.",
+    ],
+    funFacts: [
+      "Vienna's Schönbrunn Palace has 1,441 rooms.",
+      "The city's Prater amusement park has been in operation since 1766.",
+    ],
+    trivia: [
+      "Vienna was the capital of the Habsburg Empire for over 600 years.",
+      "The city's Spanish Riding School practices classical horsemanship for over 450 years.",
+    ],
+  },
+  {
+    id: 109,
+    name: "Warsaw",
+    country: "Poland",
+    clues: [
+      "This city has a famous mermaid as its symbol and was rebuilt after World War II.",
+      "Known for its mix of modern and reconstructed historical architecture.",
+    ],
+    funFacts: [
+      "Warsaw's Old Town was completely rebuilt after World War II.",
+      "The city has the tallest building in the European Union.",
+    ],
+    trivia: [
+      "Warsaw was the first city in Europe to have a public library.",
+      "The city's Łazienki Park is home to Europe's only monument to Sun Yat-sen.",
+    ],
+  },
+  {
+    id: 110,
+    name: "Zurich",
+    country: "Switzerland",
+    clues: [
+      "This city is known as a global financial center and sits on a beautiful lake.",
+      "Home to the world's largest clock face and a famous shopping street.",
+    ],
+    funFacts: [
+      "Zurich's Bahnhofstrasse is one of the world's most expensive shopping streets.",
+      "The city has over 1,200 fountains with drinkable water.",
+    ],
+    trivia: [
+      "Zurich's Grossmünster church towers were originally built without spires.",
+      "The city's Lake Zurich is so clean that you can drink the water directly from it.",
+    ],
+  },
 ];
