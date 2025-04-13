@@ -9,13 +9,12 @@ interface TextProps {
   bold?: boolean;
   as?: HeadingLevel;
 }
-
 const getVariantClasses = (variant: TextVariant) => {
   switch (variant) {
     case TextVariant.PRIMARY:
-      return "text-blue-800";
+      return "text-white-600";
     case TextVariant.SECONDARY:
-      return "text-gray-600";
+      return "text-gray-800";
     case TextVariant.SUCCESS:
       return "text-green-600";
     case TextVariant.DANGER:
@@ -76,6 +75,7 @@ export default function Text({
   className = "",
   bold = false,
   as = HeadingLevel.P,
+  ...props
 }: TextProps) {
   const Component = as;
   const defaultSize = size || getDefaultSizeForHeading(as);
@@ -89,6 +89,7 @@ export default function Text({
         ${bold || isHeading ? "font-bold" : ""}
         ${className}
       `}
+      {...props}
     >
       {children}
     </Component>

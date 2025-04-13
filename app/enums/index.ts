@@ -1,53 +1,14 @@
-export enum TextVariant {
-  PRIMARY = "primary",
-  SECONDARY = "secondary",
-  SUCCESS = "success",
-  DANGER = "danger",
-  INFO = "info",
-}
+export * from "./text";
+export * from "./button";
 
-export enum TextSize {
-  XS = "xs",
-  SM = "sm",
-  BASE = "base",
-  LG = "lg",
-  XL = "xl",
-  XXL = "2xl",
-  XXXL = "3xl",
-  XXXXL = "4xl",
-}
-
-export enum HeadingLevel {
-  H1 = "h1",
-  H2 = "h2",
-  H3 = "h3",
-  H4 = "h4",
-  H5 = "h5",
-  H6 = "h6",
-  P = "p",
-  SPAN = "span",
-}
-
-export enum ButtonVariant {
-  PRIMARY = "primary",
-  SECONDARY = "secondary",
-  SUCCESS = "success",
-  DANGER = "danger",
-}
-
-export enum ButtonSize {
-  SMALL = "small",
-  MEDIUM = "medium",
-  LARGE = "large",
-}
-
-export enum TextContent {
+export enum QuizText {
   // Game related
   GAME_TITLE = "GLOBETROTTER",
   SCORE_TEXT = "Score: {correct} correct, {incorrect} incorrect",
   NEXT_DESTINATION = "Next Question",
   CHALLENGE_FRIEND = "Challenge a Friend",
   LOADING = "Loading...",
+  PLAY_AGAIN = "Play Again",
 
   // Sections
   FUN_FACT = "Fun Fact!",

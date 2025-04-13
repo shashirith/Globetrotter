@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import { TextContent } from "../enums";
+import { QuizText } from "../enums";
 import MotionDiv from "./MotionDiv";
 
 interface ChallengeModalProps {
@@ -19,6 +19,7 @@ export default function ChallengeModal({
   isOpen,
   onClose,
   onChallengeCreated,
+  //TODO : need to add score here
   score,
 }: ChallengeModalProps) {
   const [username, setUsername] = useState("");
@@ -53,7 +54,7 @@ export default function ChallengeModal({
 
       //TODO : need to add  dynamic images here
       const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
-        TextContent.CHALLENGE_MESSAGE.replace("{url}", challengeData.shareUrl)
+        QuizText.CHALLENGE_MESSAGE.replace("{url}", challengeData.shareUrl)
       )}&image=${""}`;
 
       window.open(whatsappUrl, "_blank");

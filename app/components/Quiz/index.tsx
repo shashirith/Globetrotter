@@ -1,84 +1,22 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import ChallengeModal from "../ChallengeModal";
 import MotionButton from "../MotionButton";
 import Text from "../Text";
 import {
   TextVariant,
-  TextSize,
   HeadingLevel,
   ButtonVariant,
   ButtonSize,
-  TextContent,
+  QuizText,
 } from "../../enums";
 import SadFaceAnimation from "../SadFaceAnimation";
-import { v4 as uuidv4 } from "uuid";
 import MotionDiv from "../MotionDiv";
-
-interface Destination {
-  id: number;
-  name: string;
-  country: string;
-  clues: string[];
-  funFacts: string[];
-  trivia: string[];
-}
-
-const getUserName = () => {
-  const userName = localStorage.getItem("userName");
-
-  if (userName) {
-    return userName;
-  }
-
-  const newUserName = uuidv4();
-  localStorage.setItem("userName", newUserName);
-
-  return newUserName;
-};
-
-const generateNewGameId = () => {
-  const newGameId = uuidv4();
-  localStorage.setItem("gameId", newGameId);
-  return newGameId;
-};
-
-const getGameId = () => {
-  const gameId = localStorage.getItem("gameId");
-  if (!gameId) {
-    return generateNewGameId();
-  }
-  return gameId;
-};
-
-const api = async (path: string, options: RequestInit = {}) => {
-  const response = await fetch(`/api${path}`, {
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      username: getUserName(),
-      game_id: getGameId(),
-      ...options.headers,
-    },
-  });
-
-  return response.json();
-};
-
-const getButtonVariant = (
-  option: string,
-  selectedAnswer: string | null,
-  destination: Destination | null
-) => {
-  if (!selectedAnswer) return ButtonVariant.PRIMARY;
-  if (option === `${destination?.name}, ${destination?.country}`)
-    return ButtonVariant.SUCCESS;
-  if (option === selectedAnswer) return ButtonVariant.DANGER;
-  return ButtonVariant.SECONDARY;
-};
+import { Destination } from "@/app/types/utils";
+import { api, getButtonVariant } from "@/app/utils/quizutils";
 
 export default function Quiz({ isChallenge = false }) {
   const [destination, setDestination] = useState<Destination | null>(null);
@@ -89,7 +27,7 @@ export default function Quiz({ isChallenge = false }) {
   const [showTrivia, setShowTrivia] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isChallengeModalOpen, setIsChallengeModalOpen] = useState(false);
-  const [shareUrl, setShareUrl] = useState<string | null>(null);
+  const [, setShareUrl] = useState<string | null>(null);
   const [questionsAnswered, setQuestionsAnswered] = useState(0);
   const [showSadFace, setShowSadFace] = useState(false);
 
@@ -174,26 +112,26 @@ export default function Quiz({ isChallenge = false }) {
   const handleChallengeCreated = (url: string) => {
     setShareUrl(url);
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
-      TextContent.CHALLENGE_MESSAGE.replace("{url}", url)
+      QuizText.CHALLENGE_MESSAGE.replace("{url}", url)
     )}`;
     window.open(whatsappUrl, "_blank");
   };
 
   return (
-    <div className="min-h-screen  container  bg-gradient-to-b from-blue-50 to-blue-100 p-8">
+    <div className="min-h-screen  container  bg-gradient-to-b from-gray-50 to-gray-100 p-8">
       {showSadFace && (
         <div className="fixed inset-0 flex justify-center items-center  z-50">
           <SadFaceAnimation />
         </div>
       )}
       <div className="max-w-2xl mx-auto">
-        <div className="flex justify-center items-center mb-8 font-serif">
-          <div>
-            <Text as={HeadingLevel.H1} variant={TextVariant.PRIMARY}>
-              {TextContent.GAME_TITLE}
+        <div className="flex justify-center items-center mb-8 ">
+          <div className="text-center">
+            <Text as={HeadingLevel.H1} variant={TextVariant.SECONDARY}>
+              {QuizText.GAME_TITLE}
             </Text>
             <Text as={HeadingLevel.P} variant={TextVariant.INFO}>
-              {TextContent.SCORE_TEXT.replace(
+              {QuizText.SCORE_TEXT.replace(
                 "{correct}",
                 score.correct.toString()
               ).replace("{incorrect}", score.incorrect.toString())}
@@ -202,13 +140,62 @@ export default function Quiz({ isChallenge = false }) {
         </div>
 
         {isLoading ? (
-          <div className="text-center">{TextContent.LOADING}</div>
+          <div className="text-center">{QuizText.LOADING}</div>
         ) : (
           <div className="bg-white rounded-lg shadow-lg p-6">
             <div className="space-y-6">
               <div className="space-y-1">
+                {questionsAnswered >= 10 && (
+                  <div className="flex flex-col items-center ">
+                    <Text
+                      as={HeadingLevel.H2}
+                      variant={TextVariant.SECONDARY}
+                      className="text-center"
+                    >
+                      <div className="relative w-24 h-24 mx-auto mb-4">
+                        <div className="absolute inset-0 rounded-full border-4 border-gray-300"></div>
+                        <div
+                          className="absolute inset-0 rounded-full border-4 border-blue-500"
+                          style={{
+                            clipPath:
+                              "polygon(0 50%, 100% 50%, 100% 100%, 0 100%)",
+                          }}
+                        ></div>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="text-xl font-bold text-gray-700">
+                            {score.correct}/{questionsAnswered}
+                          </span>
+                        </div>
+                      </div>
+                      Total Score
+                    </Text>
+                    <div className="mt-6 flex justify-center items-center gap-4">
+                      <div className="space-y-4">
+                        <MotionButton
+                          onClick={() => setIsChallengeModalOpen(true)}
+                          variant={ButtonVariant.SUCCESS}
+                          size={ButtonSize.MEDIUM}
+                        >
+                          Challenge a Friend
+                        </MotionButton>
+                      </div>
+                      <MotionButton
+                        onClick={() => {
+                          setQuestionsAnswered(0);
+                          setScore({ correct: 0, incorrect: 0 });
+                          fetchNewQuestion();
+                        }}
+                        variant={ButtonVariant.DANGER}
+                        size={ButtonSize.MEDIUM}
+                      >
+                        ↻ Play Again
+                      </MotionButton>
+                    </div>
+                  </div>
+                )}
                 {destination?.clues.map((clue, index) => (
                   <Text
+                    key={index + clue}
                     as={HeadingLevel.P}
                     variant={TextVariant.SECONDARY}
                     bold
@@ -231,7 +218,7 @@ export default function Quiz({ isChallenge = false }) {
                     )}
                     className="w-full p-10 rounded-lg text-left"
                   >
-                    <Text variant={TextVariant.PRIMARY} className="p-4 ">
+                    <Text variant={TextVariant.SECONDARY} className="p-4 ">
                       {option}
                     </Text>
                   </MotionButton>
@@ -246,8 +233,11 @@ export default function Quiz({ isChallenge = false }) {
                     className="mt-6 space-y-4"
                   >
                     <div className="p-4 bg-yellow-50 rounded-lg">
-                      <Text as={HeadingLevel.H3} variant={TextVariant.PRIMARY}>
-                        {TextContent.FUN_FACT}
+                      <Text
+                        as={HeadingLevel.H3}
+                        variant={TextVariant.SECONDARY}
+                      >
+                        {QuizText.FUN_FACT}
                       </Text>
                       <Text as={HeadingLevel.P} variant={TextVariant.SECONDARY}>
                         {destination?.funFacts}
@@ -265,8 +255,11 @@ export default function Quiz({ isChallenge = false }) {
                     className="mt-6 space-y-4"
                   >
                     <div className="p-4 bg-green-50 rounded-lg">
-                      <Text as={HeadingLevel.H3} variant={TextVariant.PRIMARY}>
-                        {TextContent.TRIVIA}
+                      <Text
+                        as={HeadingLevel.H3}
+                        variant={TextVariant.SECONDARY}
+                      >
+                        {QuizText.TRIVIA}
                       </Text>
                       <Text as={HeadingLevel.P} variant={TextVariant.SECONDARY}>
                         {destination?.trivia}
@@ -283,40 +276,25 @@ export default function Quiz({ isChallenge = false }) {
                   className="w-full p-4 text-white rounded-lg font-bold"
                 >
                   <Text variant={TextVariant.SECONDARY} className="text-white">
-                    {TextContent.NEXT_DESTINATION}
+                    {QuizText.NEXT_DESTINATION}
                   </Text>
                 </MotionButton>
               )}
-
-              {questionsAnswered >= 10 && (
-                <div>
-                  <Text as={HeadingLevel.P} variant={TextVariant.SECONDARY}>
-                    You total score is {score.correct}
-                  </Text>
-                  <div className="mt-6 space-y-4">
-                    <MotionButton
-                      onClick={() => setIsChallengeModalOpen(true)}
-                      variant={ButtonVariant.SUCCESS}
-                      size={ButtonSize.MEDIUM}
-                    >
-                      Challenge a Friend
-                    </MotionButton>
-                  </div>
-                </div>
-              )}
             </div>
-            <MotionButton
-              onClick={() => {
-                setQuestionsAnswered(0);
-                setScore({ correct: 0, incorrect: 0 });
-                fetchNewQuestion();
-              }}
-              variant={ButtonVariant.SECONDARY}
-              size={ButtonSize.MEDIUM}
-              className="mt-4"
-            >
-              ↻ Play Again
-            </MotionButton>
+            {questionsAnswered < 10 && (
+              <MotionButton
+                onClick={() => {
+                  setQuestionsAnswered(0);
+                  setScore({ correct: 0, incorrect: 0 });
+                  fetchNewQuestion();
+                }}
+                variant={ButtonVariant.DANGER}
+                size={ButtonSize.MEDIUM}
+                className="mt-4"
+              >
+                {QuizText.PLAY_AGAIN}
+              </MotionButton>
+            )}
           </div>
         )}
       </div>

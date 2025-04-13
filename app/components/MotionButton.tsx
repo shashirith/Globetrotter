@@ -56,7 +56,7 @@ export default function MotionButton({
       className={`
         ${getVariantClasses(variant)}
         ${getSizeClasses(size)}
-        text-white rounded-lg font-bold transition-colors
+        rounded-lg font-bold transition-colors
         disabled:opacity-50 disabled:cursor-not-allowed
         ${className}
       `}
