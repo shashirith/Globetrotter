@@ -37,8 +37,10 @@ export default function ChallengeModal({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          username: localStorage.getItem("userName") || "",
+          game_id: localStorage.getItem("gameId") || "",
         },
-        body: JSON.stringify({ username }),
+        body: JSON.stringify({ friendName: username }),
       });
 
       if (!challengeResponse.ok) {
