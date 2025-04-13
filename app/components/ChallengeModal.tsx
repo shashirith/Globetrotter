@@ -2,29 +2,38 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { TextContent } from "../enums";
 
 interface ChallengeModalProps {
   isOpen: boolean;
   onClose: () => void;
   onChallengeCreated: (shareUrl: string) => void;
+  score: {
+    correct: number;
+    incorrect: number;
+  };
 }
 
 export default function ChallengeModal({
   isOpen,
   onClose,
   onChallengeCreated,
+  score,
 }: ChallengeModalProps) {
   const [username, setUsername] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showSadFace, setShowSadFace] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
+    setShowSadFace(false);
 
     try {
-      const response = await fetch("/api/challenge", {
+      // Create challenge
+      const challengeResponse = await fetch("/api/challenge", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,12 +41,35 @@ export default function ChallengeModal({
         body: JSON.stringify({ username }),
       });
 
-      if (!response.ok) {
+      if (!challengeResponse.ok) {
+        setShowSadFace(true);
         throw new Error("Failed to create challenge");
       }
 
-      const data = await response.json();
-      onChallengeCreated(data.shareUrl);
+      const challengeData = await challengeResponse.json();
+
+      // // Generate image
+      // const imageResponse = await fetch("/api/generate-image", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({ username, score }),
+      // });
+
+      // if (!imageResponse.ok) {
+      //   throw new Error("Failed to generate image");
+      // }
+
+      // const imageBlob = await imageResponse.blob();
+      // const imageUrl = URL.createObjectURL(imageBlob);
+
+      const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
+        TextContent.CHALLENGE_MESSAGE.replace("{url}", challengeData.shareUrl)
+      )}&image=${"https://i.ibb.co/0r00000/image.png"}`;
+
+      window.open(whatsappUrl, "_blank");
+      onChallengeCreated(challengeData.shareUrl);
       onClose();
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
@@ -49,63 +81,65 @@ export default function ChallengeModal({
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
-          onClick={onClose}
-        >
+        <>
           <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            className="bg-white rounded-lg p-6 max-w-md w-full"
-            onClick={(e) => e.stopPropagation()}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+            onClick={onClose}
           >
-            <h2 className="text-2xl font-bold text-blue-800 mb-4">
-              Challenge a Friend
-            </h2>
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-lg p-6 max-w-md w-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h2 className="text-2xl font-bold text-blue-800 mb-4">
+                Challenge a Friend
+              </h2>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label
-                  htmlFor="username"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Your Username
-                </label>
-                <input
-                  type="text"
-                  id="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  required
-                />
-              </div>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <label
+                    htmlFor="username"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Your Username
+                  </label>
+                  <input
+                    type="text"
+                    id="username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    required
+                  />
+                </div>
 
-              {error && <div className="text-red-500 text-sm">{error}</div>}
+                {error && <div className="text-red-500 text-sm">{error}</div>}
 
-              <div className="flex justify-end space-x-3">
-                <button
-                  type="button"
-                  onClick={onClose}
-                  className="px-4 py-2 text-gray-600 hover:text-gray-800"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
-                >
-                  {isLoading ? "Creating..." : "Create Challenge"}
-                </button>
-              </div>
-            </form>
+                <div className="flex justify-end space-x-3">
+                  <button
+                    type="button"
+                    onClick={onClose}
+                    className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                  >
+                    {isLoading ? "Creating..." : "Create Challenge"}
+                  </button>
+                </div>
+              </form>
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </>
       )}
     </AnimatePresence>
   );

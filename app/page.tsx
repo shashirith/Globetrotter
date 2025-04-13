@@ -14,6 +14,7 @@ import {
   ButtonSize,
   TextContent,
 } from "./enums";
+import SadFaceAnimation from "./components/SadFaceAnimation";
 
 interface Destination {
   id: number;
@@ -34,6 +35,8 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [isChallengeModalOpen, setIsChallengeModalOpen] = useState(false);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
+  const [questionsAnswered, setQuestionsAnswered] = useState(0);
+  const [showSadFace, setShowSadFace] = useState(false);
 
   const fetchNewQuestion = async () => {
     setIsLoading(true);
@@ -69,7 +72,14 @@ export default function Home() {
       });
     } else {
       setScore((prev) => ({ ...prev, incorrect: prev.incorrect + 1 }));
+      setShowSadFace(true);
     }
+
+    setQuestionsAnswered((prev) => prev + 1);
+
+    // if (questionsAnswered + 1 >= 10) {
+    //   setIsChallengeModalOpen(true);
+    // }
   };
 
   const handleChallengeCreated = (url: string) => {
@@ -82,6 +92,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen  container  bg-gradient-to-b from-blue-50 to-blue-100 p-8">
+      {showSadFace && <SadFaceAnimation />}
       <div className="max-w-2xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div>
@@ -95,13 +106,13 @@ export default function Home() {
               ).replace("{incorrect}", score.incorrect.toString())}
             </Text>
           </div>
-          <MotionButton
+          {/* <MotionButton
             onClick={() => setIsChallengeModalOpen(true)}
             variant={ButtonVariant.SUCCESS}
             size={ButtonSize.MEDIUM}
           >
             {TextContent.CHALLENGE_FRIEND}
-          </MotionButton>
+          </MotionButton> */}
         </div>
 
         {isLoading ? (
@@ -126,9 +137,9 @@ export default function Home() {
               </div>
 
               <div className="space-y-2">
-                {options.map((option) => (
+                {options.map((option, index) => (
                   <motion.button
-                    key={option}
+                    key={index + option}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => !selectedAnswer && handleAnswer(option)}
@@ -170,26 +181,22 @@ export default function Home() {
                         }
                       </Text>
                     </div>
-
-                    <div className="p-4 bg-purple-50 rounded-lg">
-                      <Text as={HeadingLevel.H3} variant={TextVariant.PRIMARY}>
-                        {TextContent.TRIVIA}
-                      </Text>
-                      <Text as={HeadingLevel.P} variant={TextVariant.SECONDARY}>
-                        {
-                          destination?.trivia[
-                            Math.floor(
-                              Math.random() * destination.trivia.length
-                            )
-                          ]
-                        }
-                      </Text>
-                    </div>
                   </motion.div>
                 </AnimatePresence>
               )}
+              <MotionButton
+                onClick={() => {
+                  setQuestionsAnswered(0);
+                  setScore({ correct: 0, incorrect: 0 });
+                  fetchNewQuestion();
+                }}
+                variant={ButtonVariant.PRIMARY}
+                size={ButtonSize.MEDIUM}
+              >
+                Play Again
+              </MotionButton>
 
-              {selectedAnswer && (
+              {selectedAnswer && questionsAnswered < 10 && (
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -201,6 +208,23 @@ export default function Home() {
                   </Text>
                 </motion.button>
               )}
+
+              {questionsAnswered >= 10 && (
+                <div>
+                  <Text as={HeadingLevel.P} variant={TextVariant.SECONDARY}>
+                    You total score is {score.correct}
+                  </Text>
+                  <div className="mt-6 space-y-4">
+                    <MotionButton
+                      onClick={() => setIsChallengeModalOpen(true)}
+                      variant={ButtonVariant.SUCCESS}
+                      size={ButtonSize.MEDIUM}
+                    >
+                      Challenge a Friend
+                    </MotionButton>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -210,6 +234,7 @@ export default function Home() {
         isOpen={isChallengeModalOpen}
         onClose={() => setIsChallengeModalOpen(false)}
         onChallengeCreated={handleChallengeCreated}
+        score={score}
       />
     </div>
   );

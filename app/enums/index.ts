@@ -45,7 +45,7 @@ export enum TextContent {
   // Game related
   GAME_TITLE = "Globetrotter",
   SCORE_TEXT = "Score: {correct} correct, {incorrect} incorrect",
-  NEXT_DESTINATION = "Next Destination",
+  NEXT_DESTINATION = "Next Question",
   CHALLENGE_FRIEND = "Challenge a Friend",
   LOADING = "Loading...",
 

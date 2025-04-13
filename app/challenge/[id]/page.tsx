@@ -35,7 +35,7 @@ export default function ChallengePage() {
         setIsLoading(false);
       }
     };
-
+    // cleanup code
     fetchChallengeData();
   }, [id]);
 
