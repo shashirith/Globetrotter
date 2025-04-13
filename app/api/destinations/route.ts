@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { destinations } from "@/app/lib/destinations";
+import clientPromise from "../../lib/mongodb";
 
 interface Destination {
   id: number;
@@ -11,36 +12,63 @@ interface Destination {
 }
 
 export async function GET() {
-  // Get a random destination
-  const randomIndex = Math.floor(Math.random() * destinations.length);
-  const destination = destinations[randomIndex];
+  try {
+    const client = await clientPromise;
+    const db = client.db("globethrotter");
+    const collection = db.collection("destinations");
+    const destinations = (await collection.find({}).toArray()).map((doc) => ({
+      id: doc.id,
+      name: doc.name,
+      country: doc.country,
+      clues: doc.clues,
+      funFacts: doc.funFacts,
+      trivia: doc.trivia,
+    })) as Destination[];
+    const options = destinations
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 3)
+      .map((d) => `${d.name}, ${d.country}`);
 
-  // Select 2 random clues
-  const selectedClues = destination.clues
-    .sort(() => 0.5 - Math.random())
-    .slice(0, 2);
+    // Select a random destination for the correct answer
+    const destination =
+      destinations[Math.floor(Math.random() * destinations.length)];
+    const correctAnswer = `${destination.name}, ${destination.country}`;
 
-  // Get 3 random destinations for options (including the correct one)
-  const options = destinations
-    .sort(() => 0.5 - Math.random())
-    .slice(0, 3)
-    .map((d: Destination) => `${d.name}, ${d.country}`);
+    // If the correct answer isn't in the options, replace one with it
+    if (!options.includes(correctAnswer)) {
+      options[Math.floor(Math.random() * 3)] = correctAnswer;
+    }
 
-  // If the correct answer isn't in the options, replace one with it
-  const correctAnswer = `${destination.name}, ${destination.country}`;
-  if (!options.includes(correctAnswer)) {
-    options[Math.floor(Math.random() * 3)] = correctAnswer;
+    console.log(options);
+
+    return NextResponse.json({
+      destinations: destinations,
+      options: options,
+    });
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
-
-  return NextResponse.json({
-    destination: {
-      id: destination.id,
-      name: destination.name,
-      country: destination.country,
-      clues: selectedClues,
-      funFacts: destination.funFacts,
-      trivia: destination.trivia,
-    },
-    options: options.sort(() => 0.5 - Math.random()),
-  });
 }
+
+// export default async function handler(
+//   req: NextApiRequest,
+//   res: NextApiResponse
+// ) {
+//   try {
+//     const client = await clientPromise;
+//     const db = client.db("globethrotter");
+
+//     // Perform database operations
+//     const collection = db.collection("destinations");
+//     const data = await collection.find({}).toArray();
+
+//     res.status(200).json(data);
+//   } catch (e) {
+//     console.error(e);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// }

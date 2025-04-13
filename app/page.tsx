@@ -43,6 +43,7 @@ export default function Home() {
     try {
       const response = await fetch("/api/destinations");
       const data = await response.json();
+      console.log(data, "data");
       setDestination(data.destination);
       setOptions(data.options);
       setSelectedAnswer(null);
