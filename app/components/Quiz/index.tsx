@@ -199,13 +199,6 @@ export default function Quiz({ isChallenge = false }) {
               ).replace("{incorrect}", score.incorrect.toString())}
             </Text>
           </div>
-          {/* <MotionButton
-            onClick={() => setIsChallengeModalOpen(true)}
-            variant={ButtonVariant.SUCCESS}
-            size={ButtonSize.MEDIUM}
-          >
-            {TextContent.CHALLENGE_FRIEND}
-          </MotionButton> */}
         </div>
 
         {isLoading ? (

@@ -1,30 +1,7 @@
 import { NextResponse } from "next/server";
 import clientPromise from "../../lib/mongodb";
-
-interface Destination {
-  id: number;
-  name: string;
-  country: string;
-  clues: string[];
-  funFacts: string[];
-  trivia: string[];
-}
-
-interface UserHistory {
-  user_name: string;
-  game_id: string;
-  destination_id: number;
-  date: Date;
-  is_correct: boolean;
-}
-
-//make this common
-async function getdbTable<T = Document>(name: string) {
-  const client = await clientPromise;
-  const db = client.db("globethrotter");
-  const collection = db.collection<T & Document>(name);
-  return collection;
-}
+import { getdbTable } from "../utils";
+import { Destination, UserHistory } from "@/app/types/utils";
 
 const OPTIONS_COUNT = 4;
 let userStartIndex = 0;

@@ -1,20 +1,6 @@
-import clientPromise from "@/app/lib/mongodb";
 import { NextResponse } from "next/server";
-
-async function getdbTable<T = Document>(name: string) {
-  const client = await clientPromise;
-  const db = client.db("globethrotter");
-  const collection = db.collection<T & Document>(name);
-  return collection;
-}
-
-interface UserHistory {
-  user_name: string;
-  game_id: string;
-  destination_id: number;
-  date: Date;
-  is_correct: boolean;
-}
+import { getdbTable } from "../utils";
+import { UserHistory } from "@/app/types/utils";
 
 export async function GET(request: Request) {
   const username = request.headers.get("username") || "";
