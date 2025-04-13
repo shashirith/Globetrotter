@@ -14,15 +14,15 @@ interface MotionButtonProps {
 const getVariantClasses = (variant: ButtonVariant) => {
   switch (variant) {
     case ButtonVariant.PRIMARY:
-      return "bg-blue-600 hover:bg-blue-700";
+      return "bg-blue-400 hover:bg-blue-500";
     case ButtonVariant.SECONDARY:
-      return "bg-gray-600 hover:bg-gray-700";
+      return "bg-gray-400 hover:bg-gray-500";
     case ButtonVariant.SUCCESS:
-      return "bg-green-600 hover:bg-green-700";
+      return "bg-green-400 hover:bg-green-500";
     case ButtonVariant.DANGER:
-      return "bg-red-600 hover:bg-red-700";
+      return "bg-red-400 hover:bg-red-500";
     default:
-      return "bg-blue-600 hover:bg-blue-700";
+      return "bg-blue-400 hover:bg-blue-500";
   }
 };
 

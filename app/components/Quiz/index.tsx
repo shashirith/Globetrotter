@@ -16,6 +16,8 @@ import {
 } from "../../enums";
 import SadFaceAnimation from "../SadFaceAnimation";
 import { v4 as uuidv4 } from "uuid";
+import MotionDiv from "../MotionDiv";
+
 interface Destination {
   id: number;
   name: string;
@@ -64,6 +66,18 @@ const api = async (path: string, options: RequestInit = {}) => {
   });
 
   return response.json();
+};
+
+const getButtonVariant = (
+  option: string,
+  selectedAnswer: string | null,
+  destination: Destination | null
+) => {
+  if (!selectedAnswer) return ButtonVariant.PRIMARY;
+  if (option === `${destination?.name}, ${destination?.country}`)
+    return ButtonVariant.SUCCESS;
+  if (option === selectedAnswer) return ButtonVariant.DANGER;
+  return ButtonVariant.SECONDARY;
 };
 
 export default function Quiz({ isChallenge = false }) {
@@ -213,31 +227,27 @@ export default function Quiz({ isChallenge = false }) {
 
               <div className="space-y-2">
                 {options.map((option, index) => (
-                  <motion.button
+                  <MotionButton
                     key={index + option}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
                     onClick={() => !selectedAnswer && handleAnswer(option)}
                     disabled={!!selectedAnswer}
-                    className={`w-full p-4 rounded-lg text-left transition-colors ${
-                      !selectedAnswer
-                        ? "bg-blue-100 hover:bg-blue-200"
-                        : option ===
-                          `${destination?.name}, ${destination?.country}`
-                        ? "bg-green-200"
-                        : option === selectedAnswer
-                        ? "bg-red-200"
-                        : "bg-gray-100"
-                    }`}
+                    variant={getButtonVariant(
+                      option,
+                      selectedAnswer,
+                      destination
+                    )}
+                    className="w-full p-10 rounded-lg text-left"
                   >
-                    <Text variant={TextVariant.SECONDARY}>{option}</Text>
-                  </motion.button>
+                    <Text variant={TextVariant.PRIMARY} className="p-4 ">
+                      {option}
+                    </Text>
+                  </MotionButton>
                 ))}
               </div>
 
               {showFunFact && (
                 <AnimatePresence>
-                  <motion.div
+                  <MotionDiv
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="mt-6 space-y-4"
@@ -250,13 +260,13 @@ export default function Quiz({ isChallenge = false }) {
                         {destination?.funFacts}
                       </Text>
                     </div>
-                  </motion.div>
+                  </MotionDiv>
                 </AnimatePresence>
               )}
 
               {showTrivia && (
                 <AnimatePresence>
-                  <motion.div
+                  <MotionDiv
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="mt-6 space-y-4"
@@ -269,34 +279,20 @@ export default function Quiz({ isChallenge = false }) {
                         {destination?.trivia}
                       </Text>
                     </div>
-                  </motion.div>
+                  </MotionDiv>
                 </AnimatePresence>
               )}
 
-              {/* <MotionButton
-                onClick={() => {
-                  setQuestionsAnswered(0);
-                  setScore({ correct: 0, incorrect: 0 });
-                  generateNewGameId();
-                  fetchNewQuestion();
-                }}
-                variant={ButtonVariant.PRIMARY}
-                size={ButtonSize.MEDIUM}
-              >
-                Play Again
-              </MotionButton> */}
-
               {selectedAnswer && questionsAnswered < 10 && (
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                <MotionButton
                   onClick={fetchNewQuestion}
-                  className="w-full p-4 bg-blue-600 text-white rounded-lg font-bold"
+                  variant={ButtonVariant.PRIMARY}
+                  className="w-full p-4 text-white rounded-lg font-bold"
                 >
                   <Text variant={TextVariant.SECONDARY} className="text-white">
                     {TextContent.NEXT_DESTINATION}
                   </Text>
-                </motion.button>
+                </MotionButton>
               )}
 
               {questionsAnswered >= 10 && (

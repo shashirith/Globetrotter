@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { TextContent } from "../enums";
+import MotionDiv from "./MotionDiv";
 
 interface ChallengeModalProps {
   isOpen: boolean;
@@ -50,25 +51,10 @@ export default function ChallengeModal({
 
       const challengeData = await challengeResponse.json();
 
-      // // Generate image
-      // const imageResponse = await fetch("/api/generate-image", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({ username, score }),
-      // });
-
-      // if (!imageResponse.ok) {
-      //   throw new Error("Failed to generate image");
-      // }
-
-      // const imageBlob = await imageResponse.blob();
-      // const imageUrl = URL.createObjectURL(imageBlob);
-
+      //TODO : need to add  dynamic images here
       const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
         TextContent.CHALLENGE_MESSAGE.replace("{url}", challengeData.shareUrl)
-      )}&image=${"https://i.ibb.co/0r00000/image.png"}`;
+      )}&image=${""}`;
 
       window.open(whatsappUrl, "_blank");
       onChallengeCreated(challengeData.shareUrl);
@@ -84,19 +70,19 @@ export default function ChallengeModal({
     <AnimatePresence>
       {isOpen && (
         <>
-          <motion.div
+          <MotionDiv
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
             onClick={onClose}
           >
-            <motion.div
+            <MotionDiv
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
               className="bg-white rounded-lg p-6 max-w-md w-full"
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e: React.MouseEvent<HTMLDivElement>) =>
+                e.stopPropagation()
+              }
             >
               <h2 className="text-2xl font-bold text-blue-800 mb-4">
                 Challenge a Friend
@@ -139,8 +125,8 @@ export default function ChallengeModal({
                   </button>
                 </div>
               </form>
-            </motion.div>
-          </motion.div>
+            </MotionDiv>
+          </MotionDiv>
         </>
       )}
     </AnimatePresence>
