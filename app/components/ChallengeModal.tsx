@@ -2,16 +2,16 @@
 
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import { QuizText } from "../enums";
 import MotionDiv from "./MotionDiv";
 import MotionButton from "./MotionButton";
 import { ButtonVariant } from "../enums";
+import { ChallengeText } from "../enums/challenge";
 
 interface ChallengeModalProps {
   isOpen: boolean;
   onClose: () => void;
   onChallengeCreated: (shareUrl: string) => void;
-  score: {
+  score?: {
     correct: number;
     incorrect: number;
   };
@@ -21,9 +21,7 @@ export default function ChallengeModal({
   isOpen,
   onClose,
   onChallengeCreated,
-}: //TODO : need to add score here
-// score,
-ChallengeModalProps) {
+}: ChallengeModalProps) {
   const [username, setUsername] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -82,7 +80,7 @@ ChallengeModalProps) {
               }
             >
               <h2 className="text-2xl font-bold text-blue-800 mb-4">
-                Challenge a Friend
+                {ChallengeText.TITLE}
               </h2>
 
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -91,7 +89,7 @@ ChallengeModalProps) {
                     htmlFor="username"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    Your Username
+                    {ChallengeText.USERNAME_LABEL}
                   </label>
                   <input
                     type="text"
@@ -103,7 +101,11 @@ ChallengeModalProps) {
                   />
                 </div>
 
-                {error && <div className="text-red-500 text-sm">{error}</div>}
+                {error && (
+                  <div className="text-red-500 text-sm">
+                    {ChallengeText.ERROR_MESSAGE}
+                  </div>
+                )}
 
                 <div className="flex justify-end space-x-3">
                   <MotionButton
@@ -111,14 +113,16 @@ ChallengeModalProps) {
                     variant={ButtonVariant.SECONDARY}
                     className="px-4 py-2 text-gray-600 hover:text-gray-800"
                   >
-                    Cancel
+                    {ChallengeText.CANCEL_BUTTON}
                   </MotionButton>
                   <MotionButton
                     disabled={isLoading}
                     variant={ButtonVariant.PRIMARY}
                     className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
                   >
-                    {isLoading ? "Creating..." : "Create Challenge"}
+                    {isLoading
+                      ? ChallengeText.CREATING_BUTTON
+                      : ChallengeText.CREATE_BUTTON}
                   </MotionButton>
                 </div>
               </form>
