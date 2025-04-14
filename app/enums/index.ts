@@ -8,7 +8,7 @@ export enum QuizText {
   NEXT_DESTINATION = "Next Question",
   CHALLENGE_FRIEND = "Challenge a Friend",
   LOADING = "Loading...",
-  PLAY_AGAIN = "Play Again",
+  PLAY_AGAIN = " ↻ Play Again",
 
   // Sections
   FUN_FACT = "Fun Fact!",

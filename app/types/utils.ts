@@ -22,3 +22,9 @@ export interface UserHistory {
   date: Date;
   is_correct: boolean;
 }
+
+export interface GetNextQuestionIndexProps {
+  name: string;
+  isChallenge: string;
+  gameId: string;
+}

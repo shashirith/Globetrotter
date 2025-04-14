@@ -4,6 +4,8 @@ import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { QuizText } from "../enums";
 import MotionDiv from "./MotionDiv";
+import MotionButton from "./MotionButton";
+import { ButtonVariant } from "../enums";
 
 interface ChallengeModalProps {
   isOpen: boolean;
@@ -110,20 +112,20 @@ export default function ChallengeModal({
                 {error && <div className="text-red-500 text-sm">{error}</div>}
 
                 <div className="flex justify-end space-x-3">
-                  <button
-                    type="button"
+                  <MotionButton
                     onClick={onClose}
+                    variant={ButtonVariant.SECONDARY}
                     className="px-4 py-2 text-gray-600 hover:text-gray-800"
                   >
                     Cancel
-                  </button>
-                  <button
-                    type="submit"
+                  </MotionButton>
+                  <MotionButton
                     disabled={isLoading}
+                    variant={ButtonVariant.PRIMARY}
                     className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
                   >
                     {isLoading ? "Creating..." : "Create Challenge"}
-                  </button>
+                  </MotionButton>
                 </div>
               </form>
             </MotionDiv>

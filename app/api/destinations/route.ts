@@ -1,14 +1,17 @@
 import { NextResponse } from "next/server";
 import clientPromise from "../../lib/mongodb";
 import { getdbTable } from "../utils";
-import { Destination, UserHistory } from "@/app/types/utils";
-
-const OPTIONS_COUNT = 4;
+import {
+  Destination,
+  GetNextQuestionIndexProps,
+  UserHistory,
+} from "@/app/types/utils";
+import { ApiMessages } from "@/app/enums/apienums";
 let userStartIndex = 0;
 const MAX_DESTINATIONS_COUNT = 100;
 
 const getRandomNumber = (name: string, notTheseNumbers: number[] = []) => {
-  if (name === "anonymous") {
+  if (name === ApiMessages.Anonymous) {
     userStartIndex = (userStartIndex + 1) % MAX_DESTINATIONS_COUNT;
     return userStartIndex++;
   }
@@ -33,11 +36,7 @@ const getNextQuestionIndex = async ({
   name,
   isChallenge,
   gameId,
-}: {
-  name: string;
-  isChallenge: string;
-  gameId: string;
-}) => {
+}: GetNextQuestionIndexProps) => {
   if (isChallenge === "true") {
     const solvedDestinationsByGameId = await getSolvedDestinations({
       game_id: gameId,
@@ -58,10 +57,10 @@ const getNextQuestionIndex = async ({
 
   return getRandomNumber(name, solvedDestinations);
 };
-
 export async function POST(request: Request) {
   try {
-    const userName = request.headers.get("username") || "anonymous";
+    const userName: string =
+      request.headers.get("username") || ApiMessages.Anonymous;
     const gameId = request.headers.get("game_id") || "";
 
     const { id, selectedAnswer } = await request.json();
@@ -77,7 +76,7 @@ export async function POST(request: Request) {
 
     if (!destination) {
       return NextResponse.json(
-        { error: "No destination found for the given Id." },
+        { error: ApiMessages.NoDestinationFound },
         { status: 404 }
       );
     }
@@ -85,7 +84,7 @@ export async function POST(request: Request) {
     // Check if the selected answer matches the destination
     const correctAnswer = `${destination.name}, ${destination.country}`;
     const isCorrect = selectedAnswer === correctAnswer;
-    if (userName !== "anonymous") {
+    if (userName !== ApiMessages.Anonymous) {
       await (
         await getdbTable<UserHistory>("user_history")
       ).insertOne({
@@ -102,13 +101,13 @@ export async function POST(request: Request) {
       correctAnswer,
       destination,
       message: isCorrect
-        ? "Correct! You've matched the clue with the right destination."
-        : "Incorrect. Try again!",
+        ? ApiMessages.CorrectAnswer
+        : ApiMessages.IncorrectAnswer,
     });
   } catch (e) {
     console.error(e);
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { error: ApiMessages.InternalServerError },
       { status: 500 }
     );
   }
@@ -116,7 +115,8 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   try {
-    const username = request.headers.get("username") || "anonymous";
+    const username: string =
+      request.headers.get("username") || ApiMessages.Anonymous;
     const gameId = request.headers.get("game_id") || "";
     const isChallenge = request.headers.get("is_challenge") || "false";
 
@@ -127,11 +127,13 @@ export async function GET(request: Request) {
     });
 
     if (isChallenge === "true" && nextQuestionIndex === null) {
-      return NextResponse.json({ error: "No more questions" }, { status: 404 });
+      return NextResponse.json(
+        { error: ApiMessages.NoMoreQuestions },
+        { status: 404 }
+      );
     }
 
     const destinationsTable = await getdbTable<Destination>("destinations");
-    console.log(nextQuestionIndex, "nextQuestionIndex");
 
     const idsToFind = Array.from(
       { length: 4 },
@@ -149,7 +151,7 @@ export async function GET(request: Request) {
     if (!destination) {
       return NextResponse.json(
         {
-          error: "No destination found for the given Id. " + nextQuestionIndex,
+          error: ApiMessages.NoDestinationFound + nextQuestionIndex,
         },
         { status: 500 }
       );
@@ -166,7 +168,7 @@ export async function GET(request: Request) {
   } catch (e) {
     console.error(e);
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { error: ApiMessages.InternalServerError },
       { status: 500 }
     );
   }

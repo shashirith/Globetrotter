@@ -4,7 +4,7 @@ import { ButtonVariant, ButtonSize } from "../enums";
 
 interface MotionButtonProps {
   children: ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   variant?: ButtonVariant;
   size?: ButtonSize;
   className?: string;

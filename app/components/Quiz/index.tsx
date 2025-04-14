@@ -17,6 +17,7 @@ import SadFaceAnimation from "../SadFaceAnimation";
 import MotionDiv from "../MotionDiv";
 import { Destination } from "@/app/types/utils";
 import { api, getButtonVariant } from "@/app/utils/quizutils";
+import ScoreDisplay from "../ScoreDisplay";
 
 export default function Quiz({ isChallenge = false }) {
   const [destination, setDestination] = useState<Destination | null>(null);
@@ -68,8 +69,6 @@ export default function Quiz({ isChallenge = false }) {
     };
     fetchUserHistory();
   }, []);
-
-  console.log(destination, "destination");
 
   const handleAnswer = async (answer: string) => {
     setSelectedAnswer(answer);
@@ -152,21 +151,10 @@ export default function Quiz({ isChallenge = false }) {
                       variant={TextVariant.SECONDARY}
                       className="text-center"
                     >
-                      <div className="relative w-24 h-24 mx-auto mb-4">
-                        <div className="absolute inset-0 rounded-full border-4 border-gray-300"></div>
-                        <div
-                          className="absolute inset-0 rounded-full border-4 border-blue-500"
-                          style={{
-                            clipPath:
-                              "polygon(0 50%, 100% 50%, 100% 100%, 0 100%)",
-                          }}
-                        ></div>
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <span className="text-xl font-bold text-gray-700">
-                            {score.correct}/{questionsAnswered}
-                          </span>
-                        </div>
-                      </div>
+                      <ScoreDisplay
+                        score={score.correct}
+                        total={questionsAnswered}
+                      />
                       Total Score
                     </Text>
                     <div className="mt-6 flex justify-center items-center gap-4">
@@ -176,7 +164,7 @@ export default function Quiz({ isChallenge = false }) {
                           variant={ButtonVariant.SUCCESS}
                           size={ButtonSize.MEDIUM}
                         >
-                          Challenge a Friend
+                          {QuizText.CHALLENGE_FRIEND}
                         </MotionButton>
                       </div>
                       <MotionButton
@@ -188,7 +176,7 @@ export default function Quiz({ isChallenge = false }) {
                         variant={ButtonVariant.DANGER}
                         size={ButtonSize.MEDIUM}
                       >
-                        ↻ Play Again
+                        {QuizText.PLAY_AGAIN}
                       </MotionButton>
                     </div>
                   </div>
