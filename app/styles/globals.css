@@ -1,0 +1,9 @@
+.sad-face-video {
+  width: 10%;
+}
+
+@media (max-width: 768px) {
+  .sad-face-video {
+    width: 15%;
+  }
+}

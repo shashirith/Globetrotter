@@ -16,7 +16,7 @@ import {
 import SadFaceAnimation from "../SadFaceAnimation";
 import MotionDiv from "../MotionDiv";
 import { Destination } from "@/app/types/utils";
-import { api, getButtonVariant } from "@/app/utils/quizutils";
+import { api, getButtonVariant, getRandomImage } from "@/app/utils/quizutils";
 import ScoreDisplay from "../ScoreDisplay";
 
 export default function Quiz({ isChallenge = false }) {
@@ -112,7 +112,7 @@ export default function Quiz({ isChallenge = false }) {
     setShareUrl(url);
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
       QuizText.CHALLENGE_MESSAGE.replace("{url}", url)
-    )}`;
+    )}&image=${encodeURIComponent(getRandomImage())}`;
     window.open(whatsappUrl, "_blank");
   };
 

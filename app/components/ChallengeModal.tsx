@@ -54,12 +54,6 @@ ChallengeModalProps) {
 
       const challengeData = await challengeResponse.json();
 
-      //TODO : need to add  dynamic images here
-      const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
-        QuizText.CHALLENGE_MESSAGE.replace("{url}", challengeData.shareUrl)
-      )}&image=${""}`;
-
-      window.open(whatsappUrl, "_blank");
       onChallengeCreated(challengeData.shareUrl);
       onClose();
     } catch (err) {

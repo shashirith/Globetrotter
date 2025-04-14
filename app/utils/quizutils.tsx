@@ -56,3 +56,21 @@ export const getButtonVariant = (
   }
   return ButtonVariant.SECONDARY;
 };
+
+export const images = [
+  "https://images.pexels.com/photos/338515/pexels-photo-338515.jpeg", // Paris
+  "https://images.pexels.com/photos/466685/pexels-photo-466685.jpeg", // New York City
+  "https://images.pexels.com/photos/50632/pexels-photo-50632.jpeg", // London
+  "https://images.pexels.com/photos/208745/pexels-photo-208745.jpeg", // Tokyo
+  "https://images.pexels.com/photos/2193300/pexels-photo-2193300.jpeg", // Sydney
+  "https://images.pexels.com/photos/338504/pexels-photo-338504.jpeg", // Rome
+  "https://images.pexels.com/photos/1619311/pexels-photo-1619311.jpeg", // Berlin
+  "https://images.pexels.com/photos/3787839/pexels-photo-3787839.jpeg", // Dubai
+  "https://images.pexels.com/photos/374870/pexels-photo-374870.jpeg", // Toronto
+  "https://images.pexels.com/photos/208745/pexels-photo-208745.jpeg", // San Francisco
+];
+
+export const getRandomImage = (): string => {
+  const randomIndex = Math.floor(Math.random() * images.length);
+  return images[randomIndex];
+};
