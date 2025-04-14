@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import ChallengeModal from "../ChallengeModal";
@@ -32,7 +32,7 @@ export default function Quiz({ isChallenge = false }) {
   const [questionsAnswered, setQuestionsAnswered] = useState(0);
   const [showSadFace, setShowSadFace] = useState(false);
 
-  const fetchNewQuestion = async () => {
+  const fetchNewQuestion = useCallback(async () => {
     setShowSadFace(false);
     setIsLoading(true);
     try {
@@ -50,7 +50,7 @@ export default function Quiz({ isChallenge = false }) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [isChallenge]);
 
   useEffect(() => {
     const fetchUserHistory = async () => {
@@ -68,7 +68,7 @@ export default function Quiz({ isChallenge = false }) {
       fetchNewQuestion();
     };
     fetchUserHistory();
-  }, []);
+  }, [fetchNewQuestion]);
 
   const handleAnswer = async (answer: string) => {
     setSelectedAnswer(answer);

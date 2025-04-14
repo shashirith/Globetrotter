@@ -21,13 +21,13 @@ export default function ChallengeModal({
   isOpen,
   onClose,
   onChallengeCreated,
-  //TODO : need to add score here
-  score,
-}: ChallengeModalProps) {
+}: //TODO : need to add score here
+// score,
+ChallengeModalProps) {
   const [username, setUsername] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [showSadFace, setShowSadFace] = useState(false);
+  const [, setShowSadFace] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

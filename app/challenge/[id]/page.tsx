@@ -14,9 +14,7 @@ interface ChallengeData {
 
 export default function ChallengePage() {
   const { id } = useParams();
-  const [challengeData, setChallengeData] = useState<ChallengeData | null>(
-    null
-  );
+  const [, setChallengeData] = useState<ChallengeData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 

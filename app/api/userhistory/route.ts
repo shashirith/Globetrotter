@@ -16,9 +16,9 @@ export async function GET(request: Request) {
     .toArray();
 
   let correctAnswer = 0,
-    incorrectAnswer = 0,
-    total = userHistory.length;
+    incorrectAnswer = 0;
 
+  const total = userHistory.length;
   userHistory.forEach((stat) => {
     if (stat.is_correct) {
       correctAnswer++;

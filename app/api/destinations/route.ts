@@ -25,7 +25,7 @@ const getRandomNumber = (name: string, notTheseNumbers: number[] = []) => {
   return number;
 };
 
-const getSolvedDestinations = async (query: any) => {
+const getSolvedDestinations = async (query: Partial<UserHistory>) => {
   const solvedDestinations = await getdbTable<UserHistory>("user_history");
   const data = await solvedDestinations.find(query).toArray();
 
