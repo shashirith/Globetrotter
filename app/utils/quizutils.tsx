@@ -48,8 +48,11 @@ export const getButtonVariant = (
   destination: Destination | null
 ) => {
   if (!selectedAnswer) return ButtonVariant.PRIMARY;
-  if (option === `${destination?.name}, ${destination?.country}`)
+  if (option === `${destination?.name}, ${destination?.country}`) {
     return ButtonVariant.SUCCESS;
-  if (option === selectedAnswer) return ButtonVariant.DANGER;
+  }
+  if (option === selectedAnswer) {
+    return ButtonVariant.DANGER;
+  }
   return ButtonVariant.SECONDARY;
 };

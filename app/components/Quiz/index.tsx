@@ -71,7 +71,6 @@ export default function Quiz({ isChallenge = false }) {
   }, [fetchNewQuestion]);
 
   const handleAnswer = async (answer: string) => {
-    setSelectedAnswer(answer);
     setShowFunFact(true);
 
     try {
@@ -101,6 +100,7 @@ export default function Quiz({ isChallenge = false }) {
       // Update state with trivia and fun facts
       setShowFunFact(true);
       setShowTrivia(true);
+      setTimeout(() => setSelectedAnswer(answer), 100);
     } catch (error) {
       console.error("Error verifying answer:", error);
     }
@@ -220,17 +220,22 @@ export default function Quiz({ isChallenge = false }) {
                     animate={{ opacity: 1, y: 0 }}
                     className="mt-6 space-y-4"
                   >
-                    <div className="p-4 bg-yellow-50 rounded-lg">
-                      <Text
-                        as={HeadingLevel.H3}
-                        variant={TextVariant.SECONDARY}
-                      >
-                        {QuizText.FUN_FACT}
-                      </Text>
-                      <Text as={HeadingLevel.P} variant={TextVariant.SECONDARY}>
-                        {destination?.funFacts}
-                      </Text>
-                    </div>
+                    {destination?.funFacts ? (
+                      <div className="p-4 bg-yellow-50 rounded-lg">
+                        <Text
+                          as={HeadingLevel.H3}
+                          variant={TextVariant.SECONDARY}
+                        >
+                          {QuizText.FUN_FACT}
+                        </Text>
+                        <Text
+                          as={HeadingLevel.P}
+                          variant={TextVariant.SECONDARY}
+                        >
+                          {destination?.funFacts}
+                        </Text>
+                      </div>
+                    ) : null}
                   </MotionDiv>
                 </AnimatePresence>
               )}
@@ -242,17 +247,22 @@ export default function Quiz({ isChallenge = false }) {
                     animate={{ opacity: 1, y: 0 }}
                     className="mt-6 space-y-4"
                   >
-                    <div className="p-4 bg-green-50 rounded-lg">
-                      <Text
-                        as={HeadingLevel.H3}
-                        variant={TextVariant.SECONDARY}
-                      >
-                        {QuizText.TRIVIA}
-                      </Text>
-                      <Text as={HeadingLevel.P} variant={TextVariant.SECONDARY}>
-                        {destination?.trivia}
-                      </Text>
-                    </div>
+                    {destination?.trivia ? (
+                      <div className="p-4 bg-green-50 rounded-lg">
+                        <Text
+                          as={HeadingLevel.H3}
+                          variant={TextVariant.SECONDARY}
+                        >
+                          {QuizText.TRIVIA}
+                        </Text>
+                        <Text
+                          as={HeadingLevel.P}
+                          variant={TextVariant.SECONDARY}
+                        >
+                          {destination?.trivia}
+                        </Text>
+                      </div>
+                    ) : null}
                   </MotionDiv>
                 </AnimatePresence>
               )}
