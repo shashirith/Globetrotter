@@ -19,17 +19,20 @@ export async function GET(request: Request) {
     incorrectAnswer = 0;
 
   const total = userHistory.length;
+  let totalScored = 0;
   userHistory.forEach((stat) => {
     if (stat.is_correct) {
       correctAnswer++;
     } else {
       incorrectAnswer++;
     }
+    totalScored += stat.score;
   });
 
   return NextResponse.json({
     correctAnswer,
     incorrectAnswer,
     total,
+    totalScored,
   });
 }

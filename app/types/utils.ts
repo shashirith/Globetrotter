@@ -21,6 +21,7 @@ export interface UserHistory {
   destination_id: number;
   date: Date;
   is_correct: boolean;
+  score: number;
 }
 
 export interface GetNextQuestionIndexProps {
