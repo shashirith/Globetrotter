@@ -57,13 +57,33 @@ const getNextQuestionIndex = async ({
 
   return getRandomNumber(name, solvedDestinations);
 };
+const getScore = (timeLapsed: number) => {
+  if (timeLapsed < 2) {
+    return 10;
+  }
+  if (timeLapsed < 4) {
+    return 8;
+  }
+  if (timeLapsed < 6) {
+    return 6;
+  }
+  if (timeLapsed < 8) {
+    return 4;
+  }
+  if (timeLapsed < 10) {
+    return 2;
+  }
+
+  return 0;
+};
+
 export async function POST(request: Request) {
   try {
     const userName: string =
       request.headers.get("username") || ApiMessages.Anonymous;
     const gameId = request.headers.get("game_id") || "";
 
-    const { id, selectedAnswer } = await request.json();
+    const { id, selectedAnswer, timeLapsed } = await request.json();
 
     const client = await clientPromise;
     const db = client.db("globethrotter");
@@ -84,6 +104,7 @@ export async function POST(request: Request) {
     // Check if the selected answer matches the destination
     const correctAnswer = `${destination.name}, ${destination.country}`;
     const isCorrect = selectedAnswer === correctAnswer;
+    const score = isCorrect ? getScore(timeLapsed) : 0;
     if (userName !== ApiMessages.Anonymous) {
       await (
         await getdbTable<UserHistory>("user_history")
@@ -93,12 +114,14 @@ export async function POST(request: Request) {
         destination_id: id,
         date: new Date(),
         is_correct: isCorrect,
+        score: score,
       } as UserHistory & Document);
     }
 
     return NextResponse.json({
       isCorrect,
       correctAnswer,
+      score,
       destination,
       message: isCorrect
         ? ApiMessages.CorrectAnswer

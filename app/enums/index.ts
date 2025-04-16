@@ -9,6 +9,8 @@ export enum QuizText {
   CHALLENGE_FRIEND = "Challenge a Friend",
   LOADING = "Loading...",
   PLAY_AGAIN = " ↻ Play Again",
+  TIME_LEFT = "Time Left in seconds",
+  TOTAL_SCORE = "Total Score",
 
   // Sections
   FUN_FACT = "Fun Fact!",
